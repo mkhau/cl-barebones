@@ -46,6 +46,9 @@ static keyword_t keywords [] =
   { "to",         TO },
   { "while",      WHILE },
   { "print",	  PRINT },
+  { "defmac",	  DEFMAC },
+  { "endmac",	  ENDMAC },
+  { "run",	  RUN },
   { NULL,         0 }
 };
 

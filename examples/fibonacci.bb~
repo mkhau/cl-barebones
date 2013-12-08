@@ -17,6 +17,9 @@
 # along with this program (in the file "COPYING"); if not, see
 # <http://www.gnu.org/licenses/>.
 
+## Modified by Michael KHAU
+## with print, to see all the fibonacci numbers.
+
 ##############################################################################
 
 # Bare Bones example program: compute the Nth value in the Fibonacci sequence
@@ -36,8 +39,10 @@
 clear F;
 clear G;
 incr G;
+clear cpt1;
 
 while N not 0 do;
+  incr cpt1;
   copy G to H;
   while F not 0 do;
     incr H;
@@ -47,5 +52,6 @@ while N not 0 do;
   copy G to F;
   copy H to G;
   print H;
-  decr N;
+  print N;
+  print cpt1;
 end;

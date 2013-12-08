@@ -39,8 +39,10 @@
 clear F;
 clear G;
 incr G;
+clear cpt1;
 
 while N not 0 do;
+  incr cpt1;
   copy G to H;
   while F not 0 do;
     incr H;
@@ -50,5 +52,6 @@ while N not 0 do;
   copy G to F;
   copy H to G;
   print H;
+  print cpt1;
   decr N;
 end;

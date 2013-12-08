@@ -31,6 +31,8 @@ typedef enum
   WHILE_STMT,
   COPY_STMT,
   PRINT_STMT,
+  DEFMAC_STMT,
+  RUNMAC_STMT,
   ADD_CLEAR_STMT  // optimizer may transform a while statement into this
 } stmt_type_t;
 
@@ -43,11 +45,13 @@ typedef struct stmt_t
   var_t *var;
   var_t *dest;  // only used for COPY_STMT
   struct stmt_t *stmt_list;  // only used for WHILE_STMT
+  char *name;	// only used for macro-related stmt.
 } stmt_t;
 
 void error (const char *fmt, ...);
 
 var_t *find_var (char *name);
+stmt_t *find_mac (char *name);
 void set_var (var_t *var, uintmax_t value);
 
 stmt_t *new_stmt (stmt_type_t type, var_t *var);

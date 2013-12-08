@@ -7,3 +7,13 @@ VAR : 4
 
 fichiers modifiés : barebones.c parser.y barebones.h scanner.l
 fichier de test : modification de fibonacci.bb
+
+Ajout : structure de contrôle macros :
+
+defmac MACRO;
+stmt_list L;
+endmac;
+
+run MACRO;
+
+Ne marche pas encore. Semble ignorer ce qui suit un endmac;

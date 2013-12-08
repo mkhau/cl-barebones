@@ -34,13 +34,13 @@
   stmt_t *stmt;
 }
 
-%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE PRINT
+%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE PRINT DEFMAC ENDMAC RUN
 
 %token <string> IDENT
 %token <integer> INTEGER
 
 %type <var> var
-%type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt
+%type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt defmac_stmt runmac_stmt
 %type <stmt> stmt_list
 %%
 
@@ -67,7 +67,9 @@ stmt:		clear_stmt
 		| decr_stmt 
 		| while_stmt 
 		| copy_stmt 
-		| print_stmt;
+		| print_stmt
+		| defmac_stmt
+		| runmac_stmt;
 
 var:		IDENT
 		{
@@ -107,3 +109,19 @@ print_stmt:	PRINT var ';'
 		{
 		  $$ = new_stmt (PRINT_STMT, $2);
 		};
+
+defmac_stmt:	DEFMAC IDENT ';' stmt_list ENDMAC ';'
+		{
+		  $$ = new_stmt (DEFMAC_STMT, NULL);
+		  $$->name = $2;
+		  $$->stmt_list = $4;
+		};
+
+runmac_stmt:	RUN IDENT ';'
+		{
+		  $$ = new_stmt (RUNMAC_STMT, NULL);
+		  $$->name = $2;
+		};
+
+
+

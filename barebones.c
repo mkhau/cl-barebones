@@ -79,6 +79,20 @@ void error (const char *fmt, ...)
 // list at "compile time" will be negligible.
 var_t *var_head = NULL;
 
+// linked list of macros
+// same reason as above
+stmt_t *mac_head = NULL;
+
+stmt_t *find_mac (char *name){
+  stmt_t *mac;
+  for (mac = mac_head; mac; mac = mac->next)
+    {
+      if (strcasecmp (name, mac->name) == 0)
+	return mac;
+    }
+  return NULL;
+}		
+
 
 var_t *find_var (char *name)
 {
@@ -158,6 +172,7 @@ void check_var_init (var_t *var)
 
 void execute_stmt (stmt_t *stmt)
 {
+  stmt_t *mac;
   stmt_line = stmt->line;
   switch (stmt->type)
     {
@@ -195,6 +210,20 @@ void execute_stmt (stmt_t *stmt)
     case PRINT_STMT: // Adding print for easier reading
       check_var_init (stmt->var);
       printf("%s : %d\n", stmt->var->name, stmt->var->val);
+      break;
+    case DEFMAC_STMT:
+      stmt->next = mac_head;
+      mac_head = stmt;
+      printf("New Macro : %s\n", mac_head->name);
+      break;
+    case RUNMAC_STMT:
+      mac = find_mac(stmt->name);
+      printf("Running macro : %s\n", stmt->name);
+      if (mac) {
+	execute_stmt_list (mac->stmt_list);
+      } else {
+	fatal(2, "macro doesn't exist");
+      }
       break;
     }
 }
