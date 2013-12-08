@@ -17,9 +17,6 @@
 // along with this program (in the file "COPYING"); if not, see
 // <http://www.gnu.org/licenses/>.
 
-// Modified by Michael KHAU
-// with print statement
-
 
 #include <inttypes.h>
 #include <stdarg.h>
@@ -192,7 +189,7 @@ void execute_stmt (stmt_t *stmt)
       stmt->dest->val += stmt->var->val;
       stmt->var->val = 0;
       break;
-    case PRINT_STMT: // Adding print for easier reading
+    case PRINT_STMT:
       check_var_init (stmt->var);
       printf("%s : %d\n", stmt->var->name, stmt->var->val);
       break;

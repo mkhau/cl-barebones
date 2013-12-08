@@ -19,11 +19,6 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Modified by Michael KHAU 
- * with print keyword
- */
-
 %{
 #include <stdbool.h>
 #include <stdint.h>

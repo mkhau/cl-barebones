@@ -17,9 +17,6 @@
 # along with this program (in the file "COPYING"); if not, see
 # <http://www.gnu.org/licenses/>.
 
-## Modified by Michael KHAU
-## with print, to see all the fibonacci numbers.
-
 ##############################################################################
 
 # Bare Bones example program: compute the Nth value in the Fibonacci sequence

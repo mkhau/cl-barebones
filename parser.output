@@ -18,66 +18,72 @@ Grammaire
    10     | decr_stmt
    11     | while_stmt
    12     | copy_stmt
+   13     | print_stmt
 
-   13 var: IDENT
+   14 var: IDENT
 
-   14 clear_stmt: CLEAR var ';'
+   15 clear_stmt: CLEAR var ';'
 
-   15 incr_stmt: INCR var ';'
+   16 incr_stmt: INCR var ';'
 
-   16 decr_stmt: DECR var ';'
+   17 decr_stmt: DECR var ';'
 
-   17 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';'
+   18 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';'
 
-   18 copy_stmt: COPY var TO var ';'
+   19 copy_stmt: COPY var TO var ';'
+
+   20 print_stmt: PRINT var ';'
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
-';' (59) 5 14 15 16 17 18
+';' (59) 5 15 16 17 18 19 20
 '=' (61) 5
 error (256)
-CLEAR (258) 14
-COPY (259) 18
-DECR (260) 16
-DO (261) 17
-END (262) 17
-INCR (263) 15
+CLEAR (258) 15
+COPY (259) 19
+DECR (260) 17
+DO (261) 18
+END (262) 18
+INCR (263) 16
 INIT (264) 5
-NOT (265) 17
-TO (266) 18
-WHILE (267) 17
-IDENT (268) 13
-INTEGER (269) 5 17
+NOT (265) 18
+TO (266) 19
+WHILE (267) 18
+PRINT (268) 20
+IDENT (269) 14
+INTEGER (270) 5 18
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (17)
+$accept (18)
     à gauche: 0
-program (18)
+program (19)
     à gauche: 1 2, à droite: 0
-init_list (19)
+init_list (20)
     à gauche: 3 4, à droite: 2 4
-init (20)
+init (21)
     à gauche: 5, à droite: 3 4
-stmt_list (21)
-    à gauche: 6 7, à droite: 1 2 7 17
-stmt (22)
-    à gauche: 8 9 10 11 12, à droite: 6 7
-var (23)
-    à gauche: 13, à droite: 5 14 15 16 17 18
-clear_stmt (24)
-    à gauche: 14, à droite: 8
-incr_stmt (25)
-    à gauche: 15, à droite: 9
-decr_stmt (26)
-    à gauche: 16, à droite: 10
-while_stmt (27)
-    à gauche: 17, à droite: 11
-copy_stmt (28)
-    à gauche: 18, à droite: 12
+stmt_list (22)
+    à gauche: 6 7, à droite: 1 2 7 18
+stmt (23)
+    à gauche: 8 9 10 11 12 13, à droite: 6 7
+var (24)
+    à gauche: 14, à droite: 5 15 16 17 18 19 20
+clear_stmt (25)
+    à gauche: 15, à droite: 8
+incr_stmt (26)
+    à gauche: 16, à droite: 9
+decr_stmt (27)
+    à gauche: 17, à droite: 10
+while_stmt (28)
+    à gauche: 18, à droite: 11
+copy_stmt (29)
+    à gauche: 19, à droite: 12
+print_stmt (30)
+    à gauche: 20, à droite: 13
 
 
 State 0
@@ -90,81 +96,92 @@ State 0
     INCR   décalage et aller à l'état 4
     INIT   décalage et aller à l'état 5
     WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
 
-    program     aller à l'état 7
-    init_list   aller à l'état 8
-    init        aller à l'état 9
-    stmt_list   aller à l'état 10
-    stmt        aller à l'état 11
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
+    program     aller à l'état 8
+    init_list   aller à l'état 9
+    init        aller à l'état 10
+    stmt_list   aller à l'état 11
+    stmt        aller à l'état 12
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
 
 
 State 1
 
-   14 clear_stmt: CLEAR . var ';'
+   15 clear_stmt: CLEAR . var ';'
 
-    IDENT  décalage et aller à l'état 17
-
-    var  aller à l'état 18
-
-
-State 2
-
-   18 copy_stmt: COPY . var TO var ';'
-
-    IDENT  décalage et aller à l'état 17
-
-    var  aller à l'état 19
-
-
-State 3
-
-   16 decr_stmt: DECR . var ';'
-
-    IDENT  décalage et aller à l'état 17
+    IDENT  décalage et aller à l'état 19
 
     var  aller à l'état 20
 
 
-State 4
+State 2
 
-   15 incr_stmt: INCR . var ';'
+   19 copy_stmt: COPY . var TO var ';'
 
-    IDENT  décalage et aller à l'état 17
+    IDENT  décalage et aller à l'état 19
 
     var  aller à l'état 21
+
+
+State 3
+
+   17 decr_stmt: DECR . var ';'
+
+    IDENT  décalage et aller à l'état 19
+
+    var  aller à l'état 22
+
+
+State 4
+
+   16 incr_stmt: INCR . var ';'
+
+    IDENT  décalage et aller à l'état 19
+
+    var  aller à l'état 23
 
 
 State 5
 
     5 init: INIT . var '=' INTEGER ';'
 
-    IDENT  décalage et aller à l'état 17
+    IDENT  décalage et aller à l'état 19
 
-    var  aller à l'état 22
+    var  aller à l'état 24
 
 
 State 6
 
-   17 while_stmt: WHILE . var NOT INTEGER DO ';' stmt_list END ';'
+   18 while_stmt: WHILE . var NOT INTEGER DO ';' stmt_list END ';'
 
-    IDENT  décalage et aller à l'état 17
+    IDENT  décalage et aller à l'état 19
 
-    var  aller à l'état 23
+    var  aller à l'état 25
 
 
 State 7
 
-    0 $accept: program . $end
+   20 print_stmt: PRINT . var ';'
 
-    $end  décalage et aller à l'état 24
+    IDENT  décalage et aller à l'état 19
+
+    var  aller à l'état 26
 
 
 State 8
+
+    0 $accept: program . $end
+
+    $end  décalage et aller à l'état 27
+
+
+State 9
 
     2 program: init_list . stmt_list
     4 init_list: init_list . init
@@ -175,25 +192,27 @@ State 8
     INCR   décalage et aller à l'état 4
     INIT   décalage et aller à l'état 5
     WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
 
-    init        aller à l'état 25
-    stmt_list   aller à l'état 26
-    stmt        aller à l'état 11
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
+    init        aller à l'état 28
+    stmt_list   aller à l'état 29
+    stmt        aller à l'état 12
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
 
 
-State 9
+State 10
 
     3 init_list: init .
 
     $défaut  réduction par utilisation de la règle 3 (init_list)
 
 
-State 10
+State 11
 
     1 program: stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -203,123 +222,139 @@ State 10
     DECR   décalage et aller à l'état 3
     INCR   décalage et aller à l'état 4
     WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
 
     $défaut  réduction par utilisation de la règle 1 (program)
 
-    stmt        aller à l'état 27
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
+    stmt        aller à l'état 30
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
 
 
-State 11
+State 12
 
     6 stmt_list: stmt .
 
     $défaut  réduction par utilisation de la règle 6 (stmt_list)
 
 
-State 12
+State 13
 
     8 stmt: clear_stmt .
 
     $défaut  réduction par utilisation de la règle 8 (stmt)
 
 
-State 13
+State 14
 
     9 stmt: incr_stmt .
 
     $défaut  réduction par utilisation de la règle 9 (stmt)
 
 
-State 14
+State 15
 
    10 stmt: decr_stmt .
 
     $défaut  réduction par utilisation de la règle 10 (stmt)
 
 
-State 15
+State 16
 
    11 stmt: while_stmt .
 
     $défaut  réduction par utilisation de la règle 11 (stmt)
 
 
-State 16
+State 17
 
    12 stmt: copy_stmt .
 
     $défaut  réduction par utilisation de la règle 12 (stmt)
 
 
-State 17
-
-   13 var: IDENT .
-
-    $défaut  réduction par utilisation de la règle 13 (var)
-
-
 State 18
 
-   14 clear_stmt: CLEAR var . ';'
+   13 stmt: print_stmt .
 
-    ';'  décalage et aller à l'état 28
+    $défaut  réduction par utilisation de la règle 13 (stmt)
 
 
 State 19
 
-   18 copy_stmt: COPY var . TO var ';'
+   14 var: IDENT .
 
-    TO  décalage et aller à l'état 29
+    $défaut  réduction par utilisation de la règle 14 (var)
 
 
 State 20
 
-   16 decr_stmt: DECR var . ';'
-
-    ';'  décalage et aller à l'état 30
-
-
-State 21
-
-   15 incr_stmt: INCR var . ';'
+   15 clear_stmt: CLEAR var . ';'
 
     ';'  décalage et aller à l'état 31
 
 
+State 21
+
+   19 copy_stmt: COPY var . TO var ';'
+
+    TO  décalage et aller à l'état 32
+
+
 State 22
 
-    5 init: INIT var . '=' INTEGER ';'
+   17 decr_stmt: DECR var . ';'
 
-    '='  décalage et aller à l'état 32
+    ';'  décalage et aller à l'état 33
 
 
 State 23
 
-   17 while_stmt: WHILE var . NOT INTEGER DO ';' stmt_list END ';'
+   16 incr_stmt: INCR var . ';'
 
-    NOT  décalage et aller à l'état 33
+    ';'  décalage et aller à l'état 34
 
 
 State 24
+
+    5 init: INIT var . '=' INTEGER ';'
+
+    '='  décalage et aller à l'état 35
+
+
+State 25
+
+   18 while_stmt: WHILE var . NOT INTEGER DO ';' stmt_list END ';'
+
+    NOT  décalage et aller à l'état 36
+
+
+State 26
+
+   20 print_stmt: PRINT var . ';'
+
+    ';'  décalage et aller à l'état 37
+
+
+State 27
 
     0 $accept: program $end .
 
     $défaut  accepter
 
 
-State 25
+State 28
 
     4 init_list: init_list init .
 
     $défaut  réduction par utilisation de la règle 4 (init_list)
 
 
-State 26
+State 29
 
     2 program: init_list stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -329,158 +364,171 @@ State 26
     DECR   décalage et aller à l'état 3
     INCR   décalage et aller à l'état 4
     WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
 
     $défaut  réduction par utilisation de la règle 2 (program)
 
-    stmt        aller à l'état 27
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
+    stmt        aller à l'état 30
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
 
 
-State 27
+State 30
 
     7 stmt_list: stmt_list stmt .
 
     $défaut  réduction par utilisation de la règle 7 (stmt_list)
 
 
-State 28
-
-   14 clear_stmt: CLEAR var ';' .
-
-    $défaut  réduction par utilisation de la règle 14 (clear_stmt)
-
-
-State 29
-
-   18 copy_stmt: COPY var TO . var ';'
-
-    IDENT  décalage et aller à l'état 17
-
-    var  aller à l'état 34
-
-
-State 30
-
-   16 decr_stmt: DECR var ';' .
-
-    $défaut  réduction par utilisation de la règle 16 (decr_stmt)
-
-
 State 31
 
-   15 incr_stmt: INCR var ';' .
+   15 clear_stmt: CLEAR var ';' .
 
-    $défaut  réduction par utilisation de la règle 15 (incr_stmt)
+    $défaut  réduction par utilisation de la règle 15 (clear_stmt)
 
 
 State 32
 
-    5 init: INIT var '=' . INTEGER ';'
+   19 copy_stmt: COPY var TO . var ';'
 
-    INTEGER  décalage et aller à l'état 35
+    IDENT  décalage et aller à l'état 19
+
+    var  aller à l'état 38
 
 
 State 33
 
-   17 while_stmt: WHILE var NOT . INTEGER DO ';' stmt_list END ';'
+   17 decr_stmt: DECR var ';' .
 
-    INTEGER  décalage et aller à l'état 36
+    $défaut  réduction par utilisation de la règle 17 (decr_stmt)
 
 
 State 34
 
-   18 copy_stmt: COPY var TO var . ';'
+   16 incr_stmt: INCR var ';' .
 
-    ';'  décalage et aller à l'état 37
+    $défaut  réduction par utilisation de la règle 16 (incr_stmt)
 
 
 State 35
 
-    5 init: INIT var '=' INTEGER . ';'
+    5 init: INIT var '=' . INTEGER ';'
 
-    ';'  décalage et aller à l'état 38
+    INTEGER  décalage et aller à l'état 39
 
 
 State 36
 
-   17 while_stmt: WHILE var NOT INTEGER . DO ';' stmt_list END ';'
+   18 while_stmt: WHILE var NOT . INTEGER DO ';' stmt_list END ';'
 
-    DO  décalage et aller à l'état 39
+    INTEGER  décalage et aller à l'état 40
 
 
 State 37
 
-   18 copy_stmt: COPY var TO var ';' .
+   20 print_stmt: PRINT var ';' .
 
-    $défaut  réduction par utilisation de la règle 18 (copy_stmt)
+    $défaut  réduction par utilisation de la règle 20 (print_stmt)
 
 
 State 38
+
+   19 copy_stmt: COPY var TO var . ';'
+
+    ';'  décalage et aller à l'état 41
+
+
+State 39
+
+    5 init: INIT var '=' INTEGER . ';'
+
+    ';'  décalage et aller à l'état 42
+
+
+State 40
+
+   18 while_stmt: WHILE var NOT INTEGER . DO ';' stmt_list END ';'
+
+    DO  décalage et aller à l'état 43
+
+
+State 41
+
+   19 copy_stmt: COPY var TO var ';' .
+
+    $défaut  réduction par utilisation de la règle 19 (copy_stmt)
+
+
+State 42
 
     5 init: INIT var '=' INTEGER ';' .
 
     $défaut  réduction par utilisation de la règle 5 (init)
 
 
-State 39
-
-   17 while_stmt: WHILE var NOT INTEGER DO . ';' stmt_list END ';'
-
-    ';'  décalage et aller à l'état 40
-
-
-State 40
-
-   17 while_stmt: WHILE var NOT INTEGER DO ';' . stmt_list END ';'
-
-    CLEAR  décalage et aller à l'état 1
-    COPY   décalage et aller à l'état 2
-    DECR   décalage et aller à l'état 3
-    INCR   décalage et aller à l'état 4
-    WHILE  décalage et aller à l'état 6
-
-    stmt_list   aller à l'état 41
-    stmt        aller à l'état 11
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
-
-
-State 41
-
-    7 stmt_list: stmt_list . stmt
-   17 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list . END ';'
-
-    CLEAR  décalage et aller à l'état 1
-    COPY   décalage et aller à l'état 2
-    DECR   décalage et aller à l'état 3
-    END    décalage et aller à l'état 42
-    INCR   décalage et aller à l'état 4
-    WHILE  décalage et aller à l'état 6
-
-    stmt        aller à l'état 27
-    clear_stmt  aller à l'état 12
-    incr_stmt   aller à l'état 13
-    decr_stmt   aller à l'état 14
-    while_stmt  aller à l'état 15
-    copy_stmt   aller à l'état 16
-
-
-State 42
-
-   17 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END . ';'
-
-    ';'  décalage et aller à l'état 43
-
-
 State 43
 
-   17 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';' .
+   18 while_stmt: WHILE var NOT INTEGER DO . ';' stmt_list END ';'
 
-    $défaut  réduction par utilisation de la règle 17 (while_stmt)
+    ';'  décalage et aller à l'état 44
+
+
+State 44
+
+   18 while_stmt: WHILE var NOT INTEGER DO ';' . stmt_list END ';'
+
+    CLEAR  décalage et aller à l'état 1
+    COPY   décalage et aller à l'état 2
+    DECR   décalage et aller à l'état 3
+    INCR   décalage et aller à l'état 4
+    WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
+
+    stmt_list   aller à l'état 45
+    stmt        aller à l'état 12
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
+
+
+State 45
+
+    7 stmt_list: stmt_list . stmt
+   18 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list . END ';'
+
+    CLEAR  décalage et aller à l'état 1
+    COPY   décalage et aller à l'état 2
+    DECR   décalage et aller à l'état 3
+    END    décalage et aller à l'état 46
+    INCR   décalage et aller à l'état 4
+    WHILE  décalage et aller à l'état 6
+    PRINT  décalage et aller à l'état 7
+
+    stmt        aller à l'état 30
+    clear_stmt  aller à l'état 13
+    incr_stmt   aller à l'état 14
+    decr_stmt   aller à l'état 15
+    while_stmt  aller à l'état 16
+    copy_stmt   aller à l'état 17
+    print_stmt  aller à l'état 18
+
+
+State 46
+
+   18 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END . ';'
+
+    ';'  décalage et aller à l'état 47
+
+
+State 47
+
+   18 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';' .
+
+    $défaut  réduction par utilisation de la règle 18 (while_stmt)

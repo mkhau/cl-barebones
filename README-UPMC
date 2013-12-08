@@ -1,0 +1,9 @@
+Note : pour compiler, le programme a besoin de bison & flex au lieu de yacc & lex.
+
+Ajout : Primitive print :
+
+print VAR; => affiche la valeur de la variable VAR :
+VAR : 4
+
+fichiers modifiés : barebones.c parser.y barebones.h scanner.l
+fichier de test : modification de fibonacci.bb

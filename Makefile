@@ -42,3 +42,6 @@ util.o: util.c util.h
 scanner.o: scanner.l barebones.h util.h parser.tab.h
 
 parser.tab.o: parser.y barebones.h
+
+clean:
+	rm -f *.o *.tab.* barebones *~
