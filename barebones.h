@@ -46,6 +46,7 @@ typedef struct stmt_t
   var_t *dest;  // only used for COPY_STMT
   struct stmt_t *stmt_list;  // only used for WHILE_STMT
   char *name;	// only used for macro-related stmt.
+  struct stmt_t *mac; // only used for macro-related stmt.
 } stmt_t;
 
 void error (const char *fmt, ...);

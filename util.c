@@ -106,7 +106,7 @@ intmax_t a_to_intmax (char *s)
   int cc;
 
   int i = sscanf (s, "%" SCNiMAX "%n", & val, & cc);
-  if ((i != 1) || (cc != strlen (s)))
+  if ((i != 1) || ((unsigned int)cc != strlen (s)))
     fatal (2, "can't interpret '%s' as an integer", s);
 
   return val;

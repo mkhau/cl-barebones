@@ -99,7 +99,7 @@ runmac_stmt (35)
     à gauche: 24, à droite: 15
 
 
-State 0
+état 0
 
     0 $accept: . program $end
 
@@ -128,7 +128,7 @@ State 0
     runmac_stmt  aller à l'état 22
 
 
-State 1
+état 1
 
    17 clear_stmt: CLEAR . var ';'
 
@@ -137,7 +137,7 @@ State 1
     var  aller à l'état 24
 
 
-State 2
+état 2
 
    21 copy_stmt: COPY . var TO var ';'
 
@@ -146,7 +146,7 @@ State 2
     var  aller à l'état 25
 
 
-State 3
+état 3
 
    19 decr_stmt: DECR . var ';'
 
@@ -155,7 +155,7 @@ State 3
     var  aller à l'état 26
 
 
-State 4
+état 4
 
    18 incr_stmt: INCR . var ';'
 
@@ -164,7 +164,7 @@ State 4
     var  aller à l'état 27
 
 
-State 5
+état 5
 
     5 init: INIT . var '=' INTEGER ';'
 
@@ -173,7 +173,7 @@ State 5
     var  aller à l'état 28
 
 
-State 6
+état 6
 
    20 while_stmt: WHILE . var NOT INTEGER DO ';' stmt_list END ';'
 
@@ -182,7 +182,7 @@ State 6
     var  aller à l'état 29
 
 
-State 7
+état 7
 
    22 print_stmt: PRINT . var ';'
 
@@ -191,28 +191,28 @@ State 7
     var  aller à l'état 30
 
 
-State 8
+état 8
 
    23 defmac_stmt: DEFMAC . IDENT ';' stmt_list ENDMAC ';'
 
     IDENT  décalage et aller à l'état 31
 
 
-State 9
+état 9
 
    24 runmac_stmt: RUN . IDENT ';'
 
     IDENT  décalage et aller à l'état 32
 
 
-State 10
+état 10
 
     0 $accept: program . $end
 
     $end  décalage et aller à l'état 33
 
 
-State 11
+état 11
 
     2 program: init_list . stmt_list
     4 init_list: init_list . init
@@ -240,14 +240,14 @@ State 11
     runmac_stmt  aller à l'état 22
 
 
-State 12
+état 12
 
     3 init_list: init .
 
     $défaut  réduction par utilisation de la règle 3 (init_list)
 
 
-State 13
+état 13
 
     1 program: stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -274,154 +274,154 @@ State 13
     runmac_stmt  aller à l'état 22
 
 
-State 14
+état 14
 
     6 stmt_list: stmt .
 
     $défaut  réduction par utilisation de la règle 6 (stmt_list)
 
 
-State 15
+état 15
 
     8 stmt: clear_stmt .
 
     $défaut  réduction par utilisation de la règle 8 (stmt)
 
 
-State 16
+état 16
 
     9 stmt: incr_stmt .
 
     $défaut  réduction par utilisation de la règle 9 (stmt)
 
 
-State 17
+état 17
 
    10 stmt: decr_stmt .
 
     $défaut  réduction par utilisation de la règle 10 (stmt)
 
 
-State 18
+état 18
 
    11 stmt: while_stmt .
 
     $défaut  réduction par utilisation de la règle 11 (stmt)
 
 
-State 19
+état 19
 
    12 stmt: copy_stmt .
 
     $défaut  réduction par utilisation de la règle 12 (stmt)
 
 
-State 20
+état 20
 
    13 stmt: print_stmt .
 
     $défaut  réduction par utilisation de la règle 13 (stmt)
 
 
-State 21
+état 21
 
    14 stmt: defmac_stmt .
 
     $défaut  réduction par utilisation de la règle 14 (stmt)
 
 
-State 22
+état 22
 
    15 stmt: runmac_stmt .
 
     $défaut  réduction par utilisation de la règle 15 (stmt)
 
 
-State 23
+état 23
 
    16 var: IDENT .
 
     $défaut  réduction par utilisation de la règle 16 (var)
 
 
-State 24
+état 24
 
    17 clear_stmt: CLEAR var . ';'
 
     ';'  décalage et aller à l'état 37
 
 
-State 25
+état 25
 
    21 copy_stmt: COPY var . TO var ';'
 
     TO  décalage et aller à l'état 38
 
 
-State 26
+état 26
 
    19 decr_stmt: DECR var . ';'
 
     ';'  décalage et aller à l'état 39
 
 
-State 27
+état 27
 
    18 incr_stmt: INCR var . ';'
 
     ';'  décalage et aller à l'état 40
 
 
-State 28
+état 28
 
     5 init: INIT var . '=' INTEGER ';'
 
     '='  décalage et aller à l'état 41
 
 
-State 29
+état 29
 
    20 while_stmt: WHILE var . NOT INTEGER DO ';' stmt_list END ';'
 
     NOT  décalage et aller à l'état 42
 
 
-State 30
+état 30
 
    22 print_stmt: PRINT var . ';'
 
     ';'  décalage et aller à l'état 43
 
 
-State 31
+état 31
 
    23 defmac_stmt: DEFMAC IDENT . ';' stmt_list ENDMAC ';'
 
     ';'  décalage et aller à l'état 44
 
 
-State 32
+état 32
 
    24 runmac_stmt: RUN IDENT . ';'
 
     ';'  décalage et aller à l'état 45
 
 
-State 33
+état 33
 
     0 $accept: program $end .
 
     $défaut  accepter
 
 
-State 34
+état 34
 
     4 init_list: init_list init .
 
     $défaut  réduction par utilisation de la règle 4 (init_list)
 
 
-State 35
+état 35
 
     2 program: init_list stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -448,21 +448,21 @@ State 35
     runmac_stmt  aller à l'état 22
 
 
-State 36
+état 36
 
     7 stmt_list: stmt_list stmt .
 
     $défaut  réduction par utilisation de la règle 7 (stmt_list)
 
 
-State 37
+état 37
 
    17 clear_stmt: CLEAR var ';' .
 
     $défaut  réduction par utilisation de la règle 17 (clear_stmt)
 
 
-State 38
+état 38
 
    21 copy_stmt: COPY var TO . var ';'
 
@@ -471,42 +471,42 @@ State 38
     var  aller à l'état 46
 
 
-State 39
+état 39
 
    19 decr_stmt: DECR var ';' .
 
     $défaut  réduction par utilisation de la règle 19 (decr_stmt)
 
 
-State 40
+état 40
 
    18 incr_stmt: INCR var ';' .
 
     $défaut  réduction par utilisation de la règle 18 (incr_stmt)
 
 
-State 41
+état 41
 
     5 init: INIT var '=' . INTEGER ';'
 
     INTEGER  décalage et aller à l'état 47
 
 
-State 42
+état 42
 
    20 while_stmt: WHILE var NOT . INTEGER DO ';' stmt_list END ';'
 
     INTEGER  décalage et aller à l'état 48
 
 
-State 43
+état 43
 
    22 print_stmt: PRINT var ';' .
 
     $défaut  réduction par utilisation de la règle 22 (print_stmt)
 
 
-State 44
+état 44
 
    23 defmac_stmt: DEFMAC IDENT ';' . stmt_list ENDMAC ';'
 
@@ -531,35 +531,35 @@ State 44
     runmac_stmt  aller à l'état 22
 
 
-State 45
+état 45
 
    24 runmac_stmt: RUN IDENT ';' .
 
     $défaut  réduction par utilisation de la règle 24 (runmac_stmt)
 
 
-State 46
+état 46
 
    21 copy_stmt: COPY var TO var . ';'
 
     ';'  décalage et aller à l'état 50
 
 
-State 47
+état 47
 
     5 init: INIT var '=' INTEGER . ';'
 
     ';'  décalage et aller à l'état 51
 
 
-State 48
+état 48
 
    20 while_stmt: WHILE var NOT INTEGER . DO ';' stmt_list END ';'
 
     DO  décalage et aller à l'état 52
 
 
-State 49
+état 49
 
     7 stmt_list: stmt_list . stmt
    23 defmac_stmt: DEFMAC IDENT ';' stmt_list . ENDMAC ';'
@@ -585,35 +585,35 @@ State 49
     runmac_stmt  aller à l'état 22
 
 
-State 50
+état 50
 
    21 copy_stmt: COPY var TO var ';' .
 
     $défaut  réduction par utilisation de la règle 21 (copy_stmt)
 
 
-State 51
+état 51
 
     5 init: INIT var '=' INTEGER ';' .
 
     $défaut  réduction par utilisation de la règle 5 (init)
 
 
-State 52
+état 52
 
    20 while_stmt: WHILE var NOT INTEGER DO . ';' stmt_list END ';'
 
     ';'  décalage et aller à l'état 54
 
 
-State 53
+état 53
 
    23 defmac_stmt: DEFMAC IDENT ';' stmt_list ENDMAC . ';'
 
     ';'  décalage et aller à l'état 55
 
 
-State 54
+état 54
 
    20 while_stmt: WHILE var NOT INTEGER DO ';' . stmt_list END ';'
 
@@ -638,14 +638,14 @@ State 54
     runmac_stmt  aller à l'état 22
 
 
-State 55
+état 55
 
    23 defmac_stmt: DEFMAC IDENT ';' stmt_list ENDMAC ';' .
 
     $défaut  réduction par utilisation de la règle 23 (defmac_stmt)
 
 
-State 56
+état 56
 
     7 stmt_list: stmt_list . stmt
    20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list . END ';'
@@ -671,14 +671,14 @@ State 56
     runmac_stmt  aller à l'état 22
 
 
-State 57
+état 57
 
    20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END . ';'
 
     ';'  décalage et aller à l'état 58
 
 
-State 58
+état 58
 
    20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';' .
 

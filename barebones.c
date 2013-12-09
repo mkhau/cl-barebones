@@ -85,7 +85,7 @@ stmt_t *mac_head = NULL;
 
 stmt_t *find_mac (char *name){
   stmt_t *mac;
-  for (mac = mac_head; mac; mac = mac->next)
+  for (mac = mac_head; mac; mac = mac->mac)
     {
       if (strcasecmp (name, mac->name) == 0)
 	return mac;
@@ -209,17 +209,17 @@ void execute_stmt (stmt_t *stmt)
       break;
     case PRINT_STMT: // Adding print for easier reading
       check_var_init (stmt->var);
-      printf("%s : %d\n", stmt->var->name, stmt->var->val);
+      printf("%s : %d\n", stmt->var->name, (int)stmt->var->val);
       break;
     case DEFMAC_STMT:
-      stmt->next = mac_head;
+      stmt->mac = mac_head;
       mac_head = stmt;
-      printf("New Macro : %s\n", mac_head->name);
+//      printf("New Macro : %s\n", mac_head->name);
       break;
     case RUNMAC_STMT:
       mac = find_mac(stmt->name);
-      printf("Running macro : %s\n", stmt->name);
-      if (mac) {
+//      printf("Running macro : %s\n", stmt->name);
+      if (mac) { // There is a macro with this name
 	execute_stmt_list (mac->stmt_list);
       } else {
 	fatal(2, "macro doesn't exist");
@@ -372,9 +372,11 @@ int main (int argc, char *argv [])
 
   printf ("initial values of variables:\n");
   print_vars (false);
+  printf ("\nbegin main_prog:\n\n");
 
   execute_stmt_list (main_prog);
 
+  printf ("\nend of main_prog:\n\n");
   printf ("final values of variables:\n");
   print_vars (true);
 
