@@ -1,4 +1,4 @@
-# Test : macros
+# Test : procedures
 ## Created by Michael KHAU
 
 # This program is free software; you can redistribute it and/or modify it
@@ -22,15 +22,15 @@
 # note that this is not optimized, and the initial values of arg0 and arg1 will be forgotten.
 # "ajoute5" will just add 5 to arg0 and put it into res.
 
-defmac ajouter;
+defproc ajouter;
   while arg1 not 0 do;
     incr arg0;
     decr arg1;
   end;
   copy arg0 to res;
-endmac;
+endproc;
 
-defmac ajoute5;
+defproc ajoute5;
   clear arg1;
   incr arg1;
   incr arg1;
@@ -38,7 +38,7 @@ defmac ajoute5;
   incr arg1;
   incr arg1;
   run ajouter;
-endmac;
+endproc;
 
 print N;
 print M;
@@ -46,19 +46,19 @@ copy N to arg0;
 run ajoute5;
 print res;
 
-defmac gauche;
+defproc gauche;
   while arg0 not 0 do;
     decr arg0;
     run droite;
   end;
-endmac;
+endproc;
 
-defmac droite;
+defproc droite;
   while arg0 not 0 do;
     decr arg0;
     run gauche;
   end;
-endmac;
+endproc;
 
 run gauche;
 

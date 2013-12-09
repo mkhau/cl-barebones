@@ -81,14 +81,14 @@ var_t *var_head = NULL;
 
 // linked list of macros
 // same reason as above
-stmt_t *mac_head = NULL;
+stmt_t *proc_head = NULL;
 
-stmt_t *find_mac (char *name){
-  stmt_t *mac;
-  for (mac = mac_head; mac; mac = mac->mac)
+stmt_t *find_proc (char *name){
+  stmt_t *proc;
+  for (proc = proc_head; proc; proc = proc->proc)
     {
-      if (strcasecmp (name, mac->name) == 0)
-	return mac;
+      if (strcasecmp (name, proc->name) == 0)
+	return proc;
     }
   return NULL;
 }		
@@ -172,7 +172,7 @@ void check_var_init (var_t *var)
 
 void execute_stmt (stmt_t *stmt)
 {
-  stmt_t *mac;
+  stmt_t *proc;
   stmt_line = stmt->line;
   switch (stmt->type)
     {
@@ -211,16 +211,16 @@ void execute_stmt (stmt_t *stmt)
       check_var_init (stmt->var);
       printf("%s : %d\n", stmt->var->name, (int)stmt->var->val);
       break;
-    case DEFMAC_STMT:
-      stmt->mac = mac_head;
-      mac_head = stmt;
-//      printf("New Macro : %s\n", mac_head->name);
+    case DEFPROC_STMT:
+      stmt->proc = proc_head;
+      proc_head = stmt;
+      printf("New Subroutine : %s\n", proc_head->name);
       break;
-    case RUNMAC_STMT:
-      mac = find_mac(stmt->name);
-//      printf("Running macro : %s\n", stmt->name);
-      if (mac) { // There is a macro with this name
-	execute_stmt_list (mac->stmt_list);
+    case RUNPROC_STMT:
+      proc = find_proc(stmt->name);
+      printf("Running subroutine : %s\n", stmt->name);
+      if (proc) { // There is a macro with this name
+	execute_stmt_list (proc->stmt_list);
       } else {
 	fatal(2, "macro doesn't exist");
       }

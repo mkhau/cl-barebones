@@ -8,23 +8,23 @@ VAR : 4
 fichiers modifiés : barebones.c parser.y barebones.h scanner.l
 fichier de test : modification de fibonacci.bb
 
-Ajout : structure de contrôle macros :
+Ajout : structure de contrôle procedure :
 
-defmac MACRO;
+defproc PROC;
 stmt_list L;
-endmac;
+endproc;
 
-run MACRO;
+run PROC;
 
-Il n'y a pas d'arguments pour les macros.
+Il n'y a pas d'arguments pour les procedures.
 
 Par convention et pour plus de lisibilité, je conseille d'utiliser comme noms d'arguments arg0, arg1, etc... et d'utiliser res comme nom de variable de résultat. De ce fait, il est conseillé d'initialiser correctement les variables requises (et de copier les variables importantes dans un nom qui ne sera pas réutilisé ailleurs) avant chaque appel, et éventuellement de les remettre à leur place ensuite. De même, il est conseillé de copier la (ou les) variable de retour ailleurs pour ne pas l'oublier s'il y a besoin d'un autre appel ensuite.
 
-Il est possible d'appeler une macro à l'intérieur d'une autre. Attention à l'effet de bord, car les variables-registres étant toutes globales, des appels de fonction encastrés peuvent modifier des données.
+Il est possible d'appeler une procedure à l'intérieur d'une autre. Attention à l'effet de bord, car les variables-registres étant toutes globales, des appels de fonction encastrés peuvent modifier des données.
 
-Appeler une macro inexistante crée une erreur; Une macro est considérée comme inexistante tant qu'elle n'a pas été définie. De ce fait, une macro ne peut être appelée si elle n'est pas définie plus haut dans le programme.
+Appeler une procedure inexistante crée une erreur; Une macro est considérée comme inexistante tant qu'elle n'a pas été définie. De ce fait, une procedure ne peut être appelée si elle n'est pas définie plus haut dans le programme.
 
-Redéfinir une macro est possible. L'ancienne macro n'est pas effacée, mais ne sera juste jamais appelée.
+Redéfinir uneprocedure est possible. L'ancienne procedure n'est pas effacée, mais ne sera juste jamais appelée.
 
 A faire :
 
