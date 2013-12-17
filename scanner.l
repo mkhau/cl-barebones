@@ -48,7 +48,8 @@ static keyword_t keywords [] =
   { "print",	  PRINT },
   { "defproc",	  DEFPROC },
   { "endproc",	  ENDPROC },
-  { "run",	  RUN },
+  { "run",	  	  RUN },
+  { "exit",		  EXIT },
   { NULL,         0 }
 };
 

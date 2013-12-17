@@ -34,13 +34,13 @@
   stmt_t *stmt;
 }
 
-%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE PRINT DEFPROC ENDPROC RUN
+%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE PRINT DEFPROC ENDPROC RUN EXIT
 
 %token <string> IDENT
 %token <integer> INTEGER
 
 %type <var> var
-%type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt defproc_stmt runproc_stmt
+%type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt defproc_stmt runproc_stmt exit_stmt
 %type <stmt> stmt_list
 %%
 
@@ -69,7 +69,8 @@ stmt:		clear_stmt
 		| copy_stmt 
 		| print_stmt
 		| defproc_stmt
-		| runproc_stmt;
+		| runproc_stmt
+		| exit_stmt;
 
 var:		IDENT
 		{
@@ -123,5 +124,8 @@ runproc_stmt:	RUN IDENT ';'
 		  $$->name = $2;
 		};
 
-
+exit_stmt:	EXIT ';'
+		{ 
+		  $$ = new_stmt (EXIT_STMT, NULL);
+		};
 

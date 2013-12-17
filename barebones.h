@@ -33,6 +33,7 @@ typedef enum
   PRINT_STMT,
   DEFPROC_STMT,
   RUNPROC_STMT,
+  EXIT_STMT,
   ADD_CLEAR_STMT  // optimizer may transform a while statement into this
 } stmt_type_t;
 
@@ -59,7 +60,7 @@ stmt_t *new_stmt (stmt_type_t type, var_t *var);
 
 void add_stmt_to_list (stmt_t *head, stmt_t *stmt);
 
-void execute_stmt (stmt_t *stmt);
-void execute_stmt_list (stmt_t *list);
+int execute_stmt (stmt_t *stmt);
+int execute_stmt_list (stmt_t *list);
 
 extern stmt_t *main_prog;

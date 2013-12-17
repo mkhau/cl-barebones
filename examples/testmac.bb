@@ -28,6 +28,8 @@ defproc ajouter;
     decr arg1;
   end;
   copy arg0 to res;
+  exit;
+  print arg0;
 endproc;
 
 defproc ajoute5;
@@ -38,6 +40,9 @@ defproc ajoute5;
   incr arg1;
   incr arg1;
   run ajouter;
+  print arg1;
+  exit;
+  print arg0;
 endproc;
 
 print N;
@@ -50,6 +55,11 @@ defproc gauche;
   while arg0 not 0 do;
     decr arg0;
     run droite;
+  end;
+  while res not 0 do;
+    print res;
+    exit;
+    print arg0;
   end;
 endproc;
 

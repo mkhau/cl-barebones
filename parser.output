@@ -21,82 +21,88 @@ Grammaire
    13     | print_stmt
    14     | defproc_stmt
    15     | runproc_stmt
+   16     | exit_stmt
 
-   16 var: IDENT
+   17 var: IDENT
 
-   17 clear_stmt: CLEAR var ';'
+   18 clear_stmt: CLEAR var ';'
 
-   18 incr_stmt: INCR var ';'
+   19 incr_stmt: INCR var ';'
 
-   19 decr_stmt: DECR var ';'
+   20 decr_stmt: DECR var ';'
 
-   20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';'
+   21 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';'
 
-   21 copy_stmt: COPY var TO var ';'
+   22 copy_stmt: COPY var TO var ';'
 
-   22 print_stmt: PRINT var ';'
+   23 print_stmt: PRINT var ';'
 
-   23 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC ';'
+   24 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC ';'
 
-   24 runproc_stmt: RUN IDENT ';'
+   25 runproc_stmt: RUN IDENT ';'
+
+   26 exit_stmt: EXIT ';'
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
-';' (59) 5 17 18 19 20 21 22 23 24
+';' (59) 5 18 19 20 21 22 23 24 25 26
 '=' (61) 5
 error (256)
-CLEAR (258) 17
-COPY (259) 21
-DECR (260) 19
-DO (261) 20
-END (262) 20
-INCR (263) 18
+CLEAR (258) 18
+COPY (259) 22
+DECR (260) 20
+DO (261) 21
+END (262) 21
+INCR (263) 19
 INIT (264) 5
-NOT (265) 20
-TO (266) 21
-WHILE (267) 20
-PRINT (268) 22
-DEFPROC (269) 23
-ENDPROC (270) 23
-RUN (271) 24
-IDENT (272) 16 23 24
-INTEGER (273) 5 20
+NOT (265) 21
+TO (266) 22
+WHILE (267) 21
+PRINT (268) 23
+DEFPROC (269) 24
+ENDPROC (270) 24
+RUN (271) 25
+EXIT (272) 26
+IDENT (273) 17 24 25
+INTEGER (274) 5 21
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (21)
+$accept (22)
     à gauche: 0
-program (22)
+program (23)
     à gauche: 1 2, à droite: 0
-init_list (23)
+init_list (24)
     à gauche: 3 4, à droite: 2 4
-init (24)
+init (25)
     à gauche: 5, à droite: 3 4
-stmt_list (25)
-    à gauche: 6 7, à droite: 1 2 7 20 23
-stmt (26)
-    à gauche: 8 9 10 11 12 13 14 15, à droite: 6 7
-var (27)
-    à gauche: 16, à droite: 5 17 18 19 20 21 22
-clear_stmt (28)
-    à gauche: 17, à droite: 8
-incr_stmt (29)
-    à gauche: 18, à droite: 9
-decr_stmt (30)
-    à gauche: 19, à droite: 10
-while_stmt (31)
-    à gauche: 20, à droite: 11
-copy_stmt (32)
-    à gauche: 21, à droite: 12
-print_stmt (33)
-    à gauche: 22, à droite: 13
-defproc_stmt (34)
-    à gauche: 23, à droite: 14
-runproc_stmt (35)
-    à gauche: 24, à droite: 15
+stmt_list (26)
+    à gauche: 6 7, à droite: 1 2 7 21 24
+stmt (27)
+    à gauche: 8 9 10 11 12 13 14 15 16, à droite: 6 7
+var (28)
+    à gauche: 17, à droite: 5 18 19 20 21 22 23
+clear_stmt (29)
+    à gauche: 18, à droite: 8
+incr_stmt (30)
+    à gauche: 19, à droite: 9
+decr_stmt (31)
+    à gauche: 20, à droite: 10
+while_stmt (32)
+    à gauche: 21, à droite: 11
+copy_stmt (33)
+    à gauche: 22, à droite: 12
+print_stmt (34)
+    à gauche: 23, à droite: 13
+defproc_stmt (35)
+    à gauche: 24, à droite: 14
+runproc_stmt (36)
+    à gauche: 25, à droite: 15
+exit_stmt (37)
+    à gauche: 26, à droite: 16
 
 
 état 0
@@ -112,107 +118,116 @@ runproc_stmt (35)
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
-    program       aller à l'état 10
-    init_list     aller à l'état 11
-    init          aller à l'état 12
-    stmt_list     aller à l'état 13
-    stmt          aller à l'état 14
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    program       aller à l'état 11
+    init_list     aller à l'état 12
+    init          aller à l'état 13
+    stmt_list     aller à l'état 14
+    stmt          aller à l'état 15
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
 
 
 état 1
 
-   17 clear_stmt: CLEAR . var ';'
+   18 clear_stmt: CLEAR . var ';'
 
-    IDENT  décalage et aller à l'état 23
-
-    var  aller à l'état 24
-
-
-état 2
-
-   21 copy_stmt: COPY . var TO var ';'
-
-    IDENT  décalage et aller à l'état 23
-
-    var  aller à l'état 25
-
-
-état 3
-
-   19 decr_stmt: DECR . var ';'
-
-    IDENT  décalage et aller à l'état 23
+    IDENT  décalage et aller à l'état 25
 
     var  aller à l'état 26
 
 
-état 4
+état 2
 
-   18 incr_stmt: INCR . var ';'
+   22 copy_stmt: COPY . var TO var ';'
 
-    IDENT  décalage et aller à l'état 23
+    IDENT  décalage et aller à l'état 25
 
     var  aller à l'état 27
+
+
+état 3
+
+   20 decr_stmt: DECR . var ';'
+
+    IDENT  décalage et aller à l'état 25
+
+    var  aller à l'état 28
+
+
+état 4
+
+   19 incr_stmt: INCR . var ';'
+
+    IDENT  décalage et aller à l'état 25
+
+    var  aller à l'état 29
 
 
 état 5
 
     5 init: INIT . var '=' INTEGER ';'
 
-    IDENT  décalage et aller à l'état 23
-
-    var  aller à l'état 28
-
-
-état 6
-
-   20 while_stmt: WHILE . var NOT INTEGER DO ';' stmt_list END ';'
-
-    IDENT  décalage et aller à l'état 23
-
-    var  aller à l'état 29
-
-
-état 7
-
-   22 print_stmt: PRINT . var ';'
-
-    IDENT  décalage et aller à l'état 23
+    IDENT  décalage et aller à l'état 25
 
     var  aller à l'état 30
 
 
+état 6
+
+   21 while_stmt: WHILE . var NOT INTEGER DO ';' stmt_list END ';'
+
+    IDENT  décalage et aller à l'état 25
+
+    var  aller à l'état 31
+
+
+état 7
+
+   23 print_stmt: PRINT . var ';'
+
+    IDENT  décalage et aller à l'état 25
+
+    var  aller à l'état 32
+
+
 état 8
 
-   23 defproc_stmt: DEFPROC . IDENT ';' stmt_list ENDPROC ';'
+   24 defproc_stmt: DEFPROC . IDENT ';' stmt_list ENDPROC ';'
 
-    IDENT  décalage et aller à l'état 31
+    IDENT  décalage et aller à l'état 33
 
 
 état 9
 
-   24 runproc_stmt: RUN . IDENT ';'
+   25 runproc_stmt: RUN . IDENT ';'
 
-    IDENT  décalage et aller à l'état 32
+    IDENT  décalage et aller à l'état 34
 
 
 état 10
 
-    0 $accept: program . $end
+   26 exit_stmt: EXIT . ';'
 
-    $end  décalage et aller à l'état 33
+    ';'  décalage et aller à l'état 35
 
 
 état 11
+
+    0 $accept: program . $end
+
+    $end  décalage et aller à l'état 36
+
+
+état 12
 
     2 program: init_list . stmt_list
     4 init_list: init_list . init
@@ -226,28 +241,30 @@ runproc_stmt (35)
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
-    init          aller à l'état 34
-    stmt_list     aller à l'état 35
-    stmt          aller à l'état 14
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    init          aller à l'état 37
+    stmt_list     aller à l'état 38
+    stmt          aller à l'état 15
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
 
 
-état 12
+état 13
 
     3 init_list: init .
 
     $défaut  réduction par utilisation de la règle 3 (init_list)
 
 
-état 13
+état 14
 
     1 program: stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -260,168 +277,184 @@ runproc_stmt (35)
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
     $défaut  réduction par utilisation de la règle 1 (program)
 
-    stmt          aller à l'état 36
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    stmt          aller à l'état 39
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
 
 
-état 14
+état 15
 
     6 stmt_list: stmt .
 
     $défaut  réduction par utilisation de la règle 6 (stmt_list)
 
 
-état 15
+état 16
 
     8 stmt: clear_stmt .
 
     $défaut  réduction par utilisation de la règle 8 (stmt)
 
 
-état 16
+état 17
 
     9 stmt: incr_stmt .
 
     $défaut  réduction par utilisation de la règle 9 (stmt)
 
 
-état 17
+état 18
 
    10 stmt: decr_stmt .
 
     $défaut  réduction par utilisation de la règle 10 (stmt)
 
 
-état 18
+état 19
 
    11 stmt: while_stmt .
 
     $défaut  réduction par utilisation de la règle 11 (stmt)
 
 
-état 19
+état 20
 
    12 stmt: copy_stmt .
 
     $défaut  réduction par utilisation de la règle 12 (stmt)
 
 
-état 20
+état 21
 
    13 stmt: print_stmt .
 
     $défaut  réduction par utilisation de la règle 13 (stmt)
 
 
-état 21
+état 22
 
    14 stmt: defproc_stmt .
 
     $défaut  réduction par utilisation de la règle 14 (stmt)
 
 
-état 22
+état 23
 
    15 stmt: runproc_stmt .
 
     $défaut  réduction par utilisation de la règle 15 (stmt)
 
 
-état 23
-
-   16 var: IDENT .
-
-    $défaut  réduction par utilisation de la règle 16 (var)
-
-
 état 24
 
-   17 clear_stmt: CLEAR var . ';'
+   16 stmt: exit_stmt .
 
-    ';'  décalage et aller à l'état 37
+    $défaut  réduction par utilisation de la règle 16 (stmt)
 
 
 état 25
 
-   21 copy_stmt: COPY var . TO var ';'
+   17 var: IDENT .
 
-    TO  décalage et aller à l'état 38
+    $défaut  réduction par utilisation de la règle 17 (var)
 
 
 état 26
 
-   19 decr_stmt: DECR var . ';'
-
-    ';'  décalage et aller à l'état 39
-
-
-état 27
-
-   18 incr_stmt: INCR var . ';'
+   18 clear_stmt: CLEAR var . ';'
 
     ';'  décalage et aller à l'état 40
 
 
+état 27
+
+   22 copy_stmt: COPY var . TO var ';'
+
+    TO  décalage et aller à l'état 41
+
+
 état 28
 
-    5 init: INIT var . '=' INTEGER ';'
+   20 decr_stmt: DECR var . ';'
 
-    '='  décalage et aller à l'état 41
+    ';'  décalage et aller à l'état 42
 
 
 état 29
 
-   20 while_stmt: WHILE var . NOT INTEGER DO ';' stmt_list END ';'
-
-    NOT  décalage et aller à l'état 42
-
-
-état 30
-
-   22 print_stmt: PRINT var . ';'
+   19 incr_stmt: INCR var . ';'
 
     ';'  décalage et aller à l'état 43
 
 
+état 30
+
+    5 init: INIT var . '=' INTEGER ';'
+
+    '='  décalage et aller à l'état 44
+
+
 état 31
 
-   23 defproc_stmt: DEFPROC IDENT . ';' stmt_list ENDPROC ';'
+   21 while_stmt: WHILE var . NOT INTEGER DO ';' stmt_list END ';'
 
-    ';'  décalage et aller à l'état 44
+    NOT  décalage et aller à l'état 45
 
 
 état 32
 
-   24 runproc_stmt: RUN IDENT . ';'
+   23 print_stmt: PRINT var . ';'
 
-    ';'  décalage et aller à l'état 45
+    ';'  décalage et aller à l'état 46
 
 
 état 33
+
+   24 defproc_stmt: DEFPROC IDENT . ';' stmt_list ENDPROC ';'
+
+    ';'  décalage et aller à l'état 47
+
+
+état 34
+
+   25 runproc_stmt: RUN IDENT . ';'
+
+    ';'  décalage et aller à l'état 48
+
+
+état 35
+
+   26 exit_stmt: EXIT ';' .
+
+    $défaut  réduction par utilisation de la règle 26 (exit_stmt)
+
+
+état 36
 
     0 $accept: program $end .
 
     $défaut  accepter
 
 
-état 34
+état 37
 
     4 init_list: init_list init .
 
     $défaut  réduction par utilisation de la règle 4 (init_list)
 
 
-état 35
+état 38
 
     2 program: init_list stmt_list .
     7 stmt_list: stmt_list . stmt
@@ -434,135 +467,83 @@ runproc_stmt (35)
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
     $défaut  réduction par utilisation de la règle 2 (program)
 
-    stmt          aller à l'état 36
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    stmt          aller à l'état 39
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
 
 
-état 36
+état 39
 
     7 stmt_list: stmt_list stmt .
 
     $défaut  réduction par utilisation de la règle 7 (stmt_list)
 
 
-état 37
-
-   17 clear_stmt: CLEAR var ';' .
-
-    $défaut  réduction par utilisation de la règle 17 (clear_stmt)
-
-
-état 38
-
-   21 copy_stmt: COPY var TO . var ';'
-
-    IDENT  décalage et aller à l'état 23
-
-    var  aller à l'état 46
-
-
-état 39
-
-   19 decr_stmt: DECR var ';' .
-
-    $défaut  réduction par utilisation de la règle 19 (decr_stmt)
-
-
 état 40
 
-   18 incr_stmt: INCR var ';' .
+   18 clear_stmt: CLEAR var ';' .
 
-    $défaut  réduction par utilisation de la règle 18 (incr_stmt)
+    $défaut  réduction par utilisation de la règle 18 (clear_stmt)
 
 
 état 41
 
-    5 init: INIT var '=' . INTEGER ';'
+   22 copy_stmt: COPY var TO . var ';'
 
-    INTEGER  décalage et aller à l'état 47
+    IDENT  décalage et aller à l'état 25
+
+    var  aller à l'état 49
 
 
 état 42
 
-   20 while_stmt: WHILE var NOT . INTEGER DO ';' stmt_list END ';'
+   20 decr_stmt: DECR var ';' .
 
-    INTEGER  décalage et aller à l'état 48
+    $défaut  réduction par utilisation de la règle 20 (decr_stmt)
 
 
 état 43
 
-   22 print_stmt: PRINT var ';' .
+   19 incr_stmt: INCR var ';' .
 
-    $défaut  réduction par utilisation de la règle 22 (print_stmt)
+    $défaut  réduction par utilisation de la règle 19 (incr_stmt)
 
 
 état 44
 
-   23 defproc_stmt: DEFPROC IDENT ';' . stmt_list ENDPROC ';'
+    5 init: INIT var '=' . INTEGER ';'
 
-    CLEAR    décalage et aller à l'état 1
-    COPY     décalage et aller à l'état 2
-    DECR     décalage et aller à l'état 3
-    INCR     décalage et aller à l'état 4
-    WHILE    décalage et aller à l'état 6
-    PRINT    décalage et aller à l'état 7
-    DEFPROC  décalage et aller à l'état 8
-    RUN      décalage et aller à l'état 9
-
-    stmt_list     aller à l'état 49
-    stmt          aller à l'état 14
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    INTEGER  décalage et aller à l'état 50
 
 
 état 45
 
-   24 runproc_stmt: RUN IDENT ';' .
+   21 while_stmt: WHILE var NOT . INTEGER DO ';' stmt_list END ';'
 
-    $défaut  réduction par utilisation de la règle 24 (runproc_stmt)
+    INTEGER  décalage et aller à l'état 51
 
 
 état 46
 
-   21 copy_stmt: COPY var TO var . ';'
+   23 print_stmt: PRINT var ';' .
 
-    ';'  décalage et aller à l'état 50
+    $défaut  réduction par utilisation de la règle 23 (print_stmt)
 
 
 état 47
 
-    5 init: INIT var '=' INTEGER . ';'
-
-    ';'  décalage et aller à l'état 51
-
-
-état 48
-
-   20 while_stmt: WHILE var NOT INTEGER . DO ';' stmt_list END ';'
-
-    DO  décalage et aller à l'état 52
-
-
-état 49
-
-    7 stmt_list: stmt_list . stmt
-   23 defproc_stmt: DEFPROC IDENT ';' stmt_list . ENDPROC ';'
+   24 defproc_stmt: DEFPROC IDENT ';' . stmt_list ENDPROC ';'
 
     CLEAR    décalage et aller à l'état 1
     COPY     décalage et aller à l'état 2
@@ -571,115 +552,177 @@ runproc_stmt (35)
     WHILE    décalage et aller à l'état 6
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
-    ENDPROC  décalage et aller à l'état 53
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
-    stmt          aller à l'état 36
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
+    stmt_list     aller à l'état 52
+    stmt          aller à l'état 15
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
+
+
+état 48
+
+   25 runproc_stmt: RUN IDENT ';' .
+
+    $défaut  réduction par utilisation de la règle 25 (runproc_stmt)
+
+
+état 49
+
+   22 copy_stmt: COPY var TO var . ';'
+
+    ';'  décalage et aller à l'état 53
 
 
 état 50
 
-   21 copy_stmt: COPY var TO var ';' .
+    5 init: INIT var '=' INTEGER . ';'
 
-    $défaut  réduction par utilisation de la règle 21 (copy_stmt)
+    ';'  décalage et aller à l'état 54
 
 
 état 51
+
+   21 while_stmt: WHILE var NOT INTEGER . DO ';' stmt_list END ';'
+
+    DO  décalage et aller à l'état 55
+
+
+état 52
+
+    7 stmt_list: stmt_list . stmt
+   24 defproc_stmt: DEFPROC IDENT ';' stmt_list . ENDPROC ';'
+
+    CLEAR    décalage et aller à l'état 1
+    COPY     décalage et aller à l'état 2
+    DECR     décalage et aller à l'état 3
+    INCR     décalage et aller à l'état 4
+    WHILE    décalage et aller à l'état 6
+    PRINT    décalage et aller à l'état 7
+    DEFPROC  décalage et aller à l'état 8
+    ENDPROC  décalage et aller à l'état 56
+    RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
+
+    stmt          aller à l'état 39
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
+
+
+état 53
+
+   22 copy_stmt: COPY var TO var ';' .
+
+    $défaut  réduction par utilisation de la règle 22 (copy_stmt)
+
+
+état 54
 
     5 init: INIT var '=' INTEGER ';' .
 
     $défaut  réduction par utilisation de la règle 5 (init)
 
 
-état 52
-
-   20 while_stmt: WHILE var NOT INTEGER DO . ';' stmt_list END ';'
-
-    ';'  décalage et aller à l'état 54
-
-
-état 53
-
-   23 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC . ';'
-
-    ';'  décalage et aller à l'état 55
-
-
-état 54
-
-   20 while_stmt: WHILE var NOT INTEGER DO ';' . stmt_list END ';'
-
-    CLEAR    décalage et aller à l'état 1
-    COPY     décalage et aller à l'état 2
-    DECR     décalage et aller à l'état 3
-    INCR     décalage et aller à l'état 4
-    WHILE    décalage et aller à l'état 6
-    PRINT    décalage et aller à l'état 7
-    DEFPROC  décalage et aller à l'état 8
-    RUN      décalage et aller à l'état 9
-
-    stmt_list     aller à l'état 56
-    stmt          aller à l'état 14
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
-
-
 état 55
 
-   23 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC ';' .
+   21 while_stmt: WHILE var NOT INTEGER DO . ';' stmt_list END ';'
 
-    $défaut  réduction par utilisation de la règle 23 (defproc_stmt)
+    ';'  décalage et aller à l'état 57
 
 
 état 56
 
-    7 stmt_list: stmt_list . stmt
-   20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list . END ';'
+   24 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC . ';'
+
+    ';'  décalage et aller à l'état 58
+
+
+état 57
+
+   21 while_stmt: WHILE var NOT INTEGER DO ';' . stmt_list END ';'
 
     CLEAR    décalage et aller à l'état 1
     COPY     décalage et aller à l'état 2
     DECR     décalage et aller à l'état 3
-    END      décalage et aller à l'état 57
     INCR     décalage et aller à l'état 4
     WHILE    décalage et aller à l'état 6
     PRINT    décalage et aller à l'état 7
     DEFPROC  décalage et aller à l'état 8
     RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
 
-    stmt          aller à l'état 36
-    clear_stmt    aller à l'état 15
-    incr_stmt     aller à l'état 16
-    decr_stmt     aller à l'état 17
-    while_stmt    aller à l'état 18
-    copy_stmt     aller à l'état 19
-    print_stmt    aller à l'état 20
-    defproc_stmt  aller à l'état 21
-    runproc_stmt  aller à l'état 22
-
-
-état 57
-
-   20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END . ';'
-
-    ';'  décalage et aller à l'état 58
+    stmt_list     aller à l'état 59
+    stmt          aller à l'état 15
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
 
 
 état 58
 
-   20 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';' .
+   24 defproc_stmt: DEFPROC IDENT ';' stmt_list ENDPROC ';' .
 
-    $défaut  réduction par utilisation de la règle 20 (while_stmt)
+    $défaut  réduction par utilisation de la règle 24 (defproc_stmt)
+
+
+état 59
+
+    7 stmt_list: stmt_list . stmt
+   21 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list . END ';'
+
+    CLEAR    décalage et aller à l'état 1
+    COPY     décalage et aller à l'état 2
+    DECR     décalage et aller à l'état 3
+    END      décalage et aller à l'état 60
+    INCR     décalage et aller à l'état 4
+    WHILE    décalage et aller à l'état 6
+    PRINT    décalage et aller à l'état 7
+    DEFPROC  décalage et aller à l'état 8
+    RUN      décalage et aller à l'état 9
+    EXIT     décalage et aller à l'état 10
+
+    stmt          aller à l'état 39
+    clear_stmt    aller à l'état 16
+    incr_stmt     aller à l'état 17
+    decr_stmt     aller à l'état 18
+    while_stmt    aller à l'état 19
+    copy_stmt     aller à l'état 20
+    print_stmt    aller à l'état 21
+    defproc_stmt  aller à l'état 22
+    runproc_stmt  aller à l'état 23
+    exit_stmt     aller à l'état 24
+
+
+état 60
+
+   21 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END . ';'
+
+    ';'  décalage et aller à l'état 61
+
+
+état 61
+
+   21 while_stmt: WHILE var NOT INTEGER DO ';' stmt_list END ';' .
+
+    $défaut  réduction par utilisation de la règle 21 (while_stmt)

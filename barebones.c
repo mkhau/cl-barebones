@@ -170,8 +170,14 @@ void check_var_init (var_t *var)
 }
 
 
-void execute_stmt (stmt_t *stmt)
+/*
+ * Changed the return type of execute_stmt and execute_stmt_list
+ * to enable exit statements.
+ * If execute_stmt returns 1, it means that there is an exit statement.
+ */
+int execute_stmt (stmt_t *stmt)
 {
+  int tmp;
   stmt_t *proc;
   stmt_line = stmt->line;
   switch (stmt->type)
@@ -193,8 +199,12 @@ void execute_stmt (stmt_t *stmt)
       break;
     case WHILE_STMT:
       check_var_init (stmt->var);
-      while (stmt->var->val)
-	execute_stmt_list (stmt->stmt_list);
+      while (stmt->var->val){
+		tmp = execute_stmt_list (stmt->stmt_list);
+		if (tmp == 1){ // exited out of a procedure inside a loop
+			return 1;
+		}
+	  }
       break;
     case COPY_STMT:
       check_var_init (stmt->var);
@@ -225,17 +235,27 @@ void execute_stmt (stmt_t *stmt)
 	fatal(2, "macro doesn't exist");
       }
       break;
+    case EXIT_STMT:
+      return 1;
+      break;
     }
+
+    return 0;
 }
 
 
-void execute_stmt_list (stmt_t *list)
+int execute_stmt_list (stmt_t *list)
 {
+  int tmp;
   while (list)
     {
-      execute_stmt (list);
+      tmp = execute_stmt (list);
+      if (tmp == 1){ // encountered an exit statement
+		  return 1; // to be sure it isn't an exit statement inside of a while loop
+	  }
       list = list->next;
     }
+  return 0;
 }
 
 
