@@ -103,10 +103,10 @@ int keyword (char *string, keyword_t *table)
 intmax_t a_to_intmax (char *s)
 {
   intmax_t val;
-  int cc;
+  int c;
 
-  int i = sscanf (s, "%" SCNiMAX "%n", & val, & cc);
-  if ((i != 1) || ((unsigned int)cc != strlen (s)))
+  int i = sscanf (s, "%" SCNiMAX "%n", & val, & c);
+  if ((i != 1) || ((unsigned int)c != strlen (s)))
     fatal (2, "can't interpret '%s' as an integer", s);
 
   return val;

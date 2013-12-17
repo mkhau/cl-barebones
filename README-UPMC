@@ -12,6 +12,7 @@ Ajout : structure de contrôle procedure :
 
 defproc PROC;
 stmt_list L;
+(exit ;)
 endproc;
 
 run PROC;
@@ -24,7 +25,11 @@ Il est possible d'appeler une procedure à l'intérieur d'une autre. Attention �
 
 Appeler une procedure inexistante crée une erreur; Une macro est considérée comme inexistante tant qu'elle n'a pas été définie. De ce fait, une procedure ne peut être appelée si elle n'est pas définie plus haut dans le programme.
 
-Redéfinir uneprocedure est possible. L'ancienne procedure n'est pas effacée, mais ne sera juste jamais appelée.
+Redéfinir une procedure est possible. L'ancienne procedure n'est pas effacée, mais ne sera juste jamais appelée.
+
+Pour sortir d'une procedure, deux cas :
+mentionner un "exit;" auquel cas l'exécution de la procedure prendra fin;
+Ou arriver à endproc;
 
 A faire :
 
