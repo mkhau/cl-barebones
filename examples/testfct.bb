@@ -96,9 +96,6 @@ run translincr (2);
 
 print fun;
 copy fun to plus2;
-run plus2 (4);
-print res;
-
 run translincr (7);
 copy fun to plus7;
 

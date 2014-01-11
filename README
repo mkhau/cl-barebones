@@ -1,6 +1,7 @@
 README for Bare Bones interpreter
 $Id: README 15 2008-02-19 19:35:02Z eric $
 Copyright 2008 Eric Smith <eric@brouhaha.com>
+Modified in 2013 by Michael KHAU
 
 BareBones is an interpreter for the "Bare Bones" programming language
 defined in Chapter 11 of _Computer Science: An Overview_, 9th Edition,
@@ -29,6 +30,14 @@ Reserved words:
         not
         to
         while
+        
+        print
+        defproc
+        endproc
+        run
+        exit
+        lambda
+        endlam
 
     Reserved words are case-insensitive.
 
@@ -45,6 +54,10 @@ Variables:
     any arbitrarily large non-negative integer values.  This
     implementation is currently limited to the size of the host
     C compiler's uintmax_t type, which typically is 2^64-1.
+    
+    Variable may also contain functions. The keyword lambda store into
+    an identifier a sequence of statements that can be applied to
+    arguments with the keyword run.
 
 I/O:
 
@@ -75,6 +88,26 @@ Statements:
 
     copy <var> to <var>;    # Copy one variable to another, preserving
                             # value of original.
+                          
+    print <var>;			# Print the current value of the variable.
+							# Also print its statements if it is a function.
+							
+	defproc <ident> (<var>,	# Create a subroutine named <ident> that has
+	<var>...);				# the differents <var> arguments. If there is
+	  <statements>			# no arguments needed, forget the parenthesis.
+	endproc;				# Does not have (yet) a returned value.
+	
+	lambda <var> (<var>,	# Same as above, except that the first variable
+	...);					# is the function itself, and can be run as a
+	  <statements>			# subroutine like above.
+	endlam;
+	
+	run <ident>	(<var>,		# Run a subroutine (may it be a variable or not)
+	<integer>...)			# with arguments inside parenthesis. Arguments
+							# may be variables or integers. Same as above,
+							# forget the parenthesis if not needed.
+							
+	exit;					# Ends the current running subroutine.
 
 -----------------------------------------------------------------------------
 Language extensions:
@@ -85,6 +118,10 @@ proper, there may be an initialization section, in which variables may
 be initialized to non-negative integer values:
 
 	init X = 37;
+	
+Another extension is added to the language, enabling printing (mostly
+for debugging issues) and creating subroutines to create easier code
+(by, for example, defining how to add).
 
 -----------------------------------------------------------------------------
 Usage:
@@ -105,16 +142,18 @@ command line, this initialization is suppressed, and any reference to
 an uninitialized variable, other than in a clear statement, will result
 in a run time error.
 
-Before the program is interpreted, the initial values of all variables
-will be printed to standard output.  After successful completion of
-the interpreter, the final values will be printed.
-
 The "-O" command line option enables optimization of the program.
 Currently only one type of optimization is performed.  A common idiom in
 Bare Bones programs is to use a while loop to add one variable to another,
 clearing the first in the process.  The optimizer will recognize this
 idiom and implement a direct solution, replacing the standard iterative
 interpretation of the while loop.
+
+The "-v" command line option enables much more details about the values
+sent into a subroutine. With this option enabled, before the program 
+is interpreted, the initial values of all variables will be printed to 
+standard output.  After successful completion of the interpreter, the 
+final values will also be printed.
 
 -----------------------------------------------------------------------------
 Bare Bones Sample Programs:
