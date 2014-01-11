@@ -34,7 +34,8 @@
   stmt_t *stmt;
 }
 
-%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE PRINT DEFPROC ENDPROC RUN EXIT
+%token CLEAR COPY DECR DO END INCR INIT NOT TO WHILE 
+%token PRINT DEFPROC ENDPROC RUN EXIT LAMBDA ENDLAM
 
 %token <string> IDENT
 %token <integer> INTEGER
@@ -42,7 +43,7 @@
 %type <var> var val 
 %type <var> val_list arg_list
 %type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt defproc_stmt runproc_stmt exit_stmt
-%type <stmt> stmt_list
+%type <stmt> stmt_list lambda_stmt
 %%
 
 program:	stmt_list { main_prog = $1; }
@@ -72,6 +73,7 @@ stmt:		clear_stmt
 		| print_stmt
 		| defproc_stmt
 		| runproc_stmt
+		| lambda_stmt
 		| exit_stmt;
 
 var:		IDENT
@@ -171,3 +173,9 @@ exit_stmt:	EXIT ';'
 		  $$ = new_stmt (EXIT_STMT, NULL);
 		};
 
+lambda_stmt:	LAMBDA var '(' arg_list ')' ';' stmt_list ENDLAM ';'
+		{
+			$$ = new_stmt (LAMBDA_STMT, $2);
+			$$->dest = $4;
+			$$->stmt_list = $7;
+		};

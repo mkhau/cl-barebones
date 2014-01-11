@@ -84,3 +84,24 @@ defproc droite (d);
 endproc;
 
 run gauche(5);
+
+defproc translincr (x);
+  lambda fun ( b ) ;
+    run add (x , b);
+    print res;
+  endlam;
+endproc;
+
+run translincr (2);
+
+print fun;
+copy fun to plus2;
+run plus2 (4);
+print res;
+
+run translincr (7);
+copy fun to plus7;
+
+run plus2(20);
+run plus7(70);
+run plus2(40);

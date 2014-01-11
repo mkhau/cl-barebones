@@ -38,6 +38,8 @@ struct var_t
   struct var_t *next;
   char *name;
   bool init;
+  stmt_t *fonc;
+  env_t *env_l;
   uintmax_t val;
 };
 
@@ -211,18 +213,20 @@ static void define_var (char *s)
 void print_vars (bool show_uninitialized)
 {
   var_t *var;
-
-  for (var = current_env->first; var; var = var->next)
+  env_t *env;
+  for (env = current_env; env; env = env->parent){
+  for (var = env->first; var; var = var->next)
     {
       if ((! var->init) && (! show_uninitialized))
 	continue;
-      printf ("%s: ", var->name);
+      printf ("%s at level %d: ", var->name, env->level);
       if (var->init)
 	printf ("%" PRIuMAX, var->val);
       else
 	printf ("uninitialized");
       printf ("\n");
     }
+  }
 }
 
 
@@ -232,7 +236,52 @@ void check_var_init (var_t *var)
     error ("unitialized variable %s", var->name);
 }
 
-
+void print_stmt (stmt_t *stmt){
+	stmt_t *tmp;
+	var_t *var;
+switch (stmt->type)
+    {
+		case CLEAR_STMT:
+		printf("clear %s\n", stmt->var->name);
+		break;
+		case INCR_STMT:
+		printf("incr %s\n", stmt->var->name);
+		break;
+		case DECR_STMT:
+		printf("decr %s\n", stmt->var->name);
+		break;
+		case WHILE_STMT:
+		printf("while %s not 0 do\n", stmt->var->name);
+		tmp = stmt->stmt_list;
+		while (tmp){
+			print_stmt(tmp);
+			tmp = tmp->next;
+		}
+		break;
+		case COPY_STMT:
+		printf("copy %s to %s\n", stmt->var->name, stmt->dest->name);
+		break;
+		case PRINT_STMT:
+		printf("print %s\n", stmt->var->name);
+		break;
+		case DEFPROC_STMT:
+		printf("defproc %s\n", stmt->name);
+		break;
+		case RUNPROC_STMT:
+		printf("runproc %s (", stmt->name);
+		var = stmt->var;
+		while (var){
+			printf(" %s",var->name);
+			var = var->next;
+		}
+		printf(")\n"); 
+		break;
+		default:
+		printf("other\n");
+		break;
+				
+	}
+}
 /*
  * Changed the return type of execute_stmt and execute_stmt_list
  * to enable exit statements.
@@ -280,6 +329,8 @@ int execute_stmt (stmt_t *stmt)
     case COPY_STMT:
       check_var_init (stmt->var);
       stmt->dest->val = stmt->var->val;
+      stmt->dest->fonc = stmt->var->fonc;
+      stmt->dest->env_l = stmt->var->env_l;
       stmt->dest->init = true;
       break;
     case ADD_CLEAR_STMT:
@@ -290,6 +341,16 @@ int execute_stmt (stmt_t *stmt)
       break;
     case PRINT_STMT: // Adding print for easier reading
       check_var_init (stmt->var);
+      
+      if (stmt->var->fonc){
+		  printf("%s : ", stmt->var->name);
+		  proc = stmt->var->fonc->stmt_list;
+		  while (proc){
+		  print_stmt(proc);
+		  proc = proc->next;
+		  }
+		  break;
+      }
       printf("%s : %d ", stmt->var->name, (int)stmt->var->val);
       if (verbose){
 		printf("at level %d\n", current_env->level);
@@ -308,13 +369,29 @@ int execute_stmt (stmt_t *stmt)
 			var1 = var1->next;
 		}
       break;
+    case LAMBDA_STMT:
+        var1 = stmt->var;
+        var1->env_l = current_env;
+        proc = new_stmt(DEFPROC_STMT, stmt->dest);
+        var1->fonc = proc;
+        proc->var = stmt->dest;
+        proc->stmt_list = stmt->stmt_list;
+        break;
     case RUNPROC_STMT:
       proc = find_proc(stmt->name);
+      next_env = create_env(current_env);
+      if (!proc){
+		  var1 = find_var(stmt->name);
+		  proc = var1->fonc;
+		  if (!proc){
+			  	fatal(2, "subroutine doesn't exist");
+		  }
+		  merge_env(next_env, var1->env_l);		  
+	  }
       printf("Running subroutine : %s\n", stmt->name);
       if (proc) { // There is a macro with this name
 		var1 = proc->var;
 		var2 = stmt->var;
-		next_env = create_env(current_env);
 		while (var1 != NULL){
 			if (verbose)
 				printf("\targ %s",var1->name);
@@ -339,7 +416,7 @@ int execute_stmt (stmt_t *stmt)
 	execute_stmt_list (proc->stmt_list);
   	current_env = current_env->parent;
       } else {
-	fatal(2, "macro doesn't exist");
+	fatal(2, "subroutine doesn't exist");
       }
       break;
     case EXIT_STMT:
@@ -350,6 +427,19 @@ int execute_stmt (stmt_t *stmt)
     return 0;
 }
 
+void merge_env(env_t *base, env_t *add){
+		var_t *var;
+		var_t *cpy;
+		for (var = add->first; var; var = var->next){
+				cpy = copy_find_var(var->name);
+				cpy->val = var->val;
+				cpy->env_l = var->env_l;
+				cpy->fonc = var->fonc;
+				cpy->next = base->first;
+				base->first = cpy;
+//				printf("base now has %s = %d\n", cpy->name, cpy->val);
+		}
+}
 
 int execute_stmt_list (stmt_t *list)
 {
@@ -503,15 +593,19 @@ int main (int argc, char *argv [])
   if (opt_flag)
     optimize_stmt_list (main_prog);
 
+  if (verbose){
   printf ("initial values of variables:\n");
   print_vars (false);
+  }
   printf ("\nbegin main_prog:\n\n");
 
   execute_stmt_list (main_prog);
 
   printf ("\nend of main_prog:\n\n");
+  if (verbose){
   printf ("final values of variables:\n");
   print_vars (true);
+  }
 
   exit (0);
 }

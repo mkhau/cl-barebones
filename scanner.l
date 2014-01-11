@@ -50,6 +50,8 @@ static keyword_t keywords [] =
   { "endproc",	  ENDPROC },
   { "run",	  	  RUN },
   { "exit",		  EXIT },
+  { "lambda",	  LAMBDA },
+  { "endlam",	  ENDLAM },
   { NULL,         0 }
 };
 

@@ -36,6 +36,7 @@ typedef enum
   DEFPROC_STMT,
   RUNPROC_STMT,
   EXIT_STMT,
+  LAMBDA_STMT,
   ADD_CLEAR_STMT  // optimizer may transform a while statement into this
 } stmt_type_t;
 
@@ -65,6 +66,7 @@ void add_val_to_list (var_t *head, var_t *var);
 var_t *new_int_var (int num);
 var_t *new_arg_var (char* s);
 var_t *copy_find_var (char *name);
+void merge_env (env_t *base, env_t *add);
 
 int execute_stmt (stmt_t *stmt);
 int execute_stmt_list (stmt_t *list);
