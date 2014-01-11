@@ -41,6 +41,13 @@ struct var_t
   uintmax_t val;
 };
 
+struct env_t
+{
+  struct env_t *parent;
+  var_t *first;
+  int level;
+};
+
 int stmt_line;  // line number of currently executing statement, for
 		// error reporting purposes
 
@@ -48,6 +55,7 @@ bool init_to_zero = true;  // if false, reference to uninitialized variables
                            // (other than in a clear statement) will result
                            // in a run time error
 
+bool verbose = false; // if true, show some variable informations
 
 void usage (FILE *f)
 {
@@ -55,6 +63,7 @@ void usage (FILE *f)
   fprintf (f, "options:\n");
   fprintf (f, "  -u            report uninitialized variables\n");
   fprintf (f, "  -O            optimize\n");
+  fprintf (f, "  -v            with variable informations\n");
   fprintf (f, "initializers:\n");
   fprintf (f, "  var=value     e.g. X=37\n");
 }
@@ -72,15 +81,10 @@ void error (const char *fmt, ...)
   exit (2);
 }
 
-
-// linked list of variables
-// unsorted because it is assumed that there will only be a small number
-// of variables, so the cost of looking them up by a linear search of a
-// list at "compile time" will be negligible.
-var_t *var_head = NULL;
-
 // linked list of macros
-// same reason as above
+// unsorted because it is assumed that there will only be a small number
+// of macros, so the cost of looking them up by a linear search of a
+// list at "compile time" will be negligible.
 stmt_t *proc_head = NULL;
 
 stmt_t *find_proc (char *name){
@@ -93,17 +97,52 @@ stmt_t *find_proc (char *name){
   return NULL;
 }		
 
+env_t *create_env (env_t *parent)
+{
+  env_t *env;
+  env = alloc (sizeof (env_t));
+  env->parent = parent;
+  env->first = NULL;
+  if (parent){
+  env->level = parent->level + 1;
+  } else {
+	env->level = 0;
+  }
+  return env;
+}
+
+env_t *current_env = NULL;
+
+var_t *copy_find_var (char *name)
+{
+  var_t *res = 	alloc (sizeof (var_t));
+  res->val = 0;
+  res->name = name;
+  res->init = true;
+  return res;
+}
 
 var_t *find_var (char *name)
 {
   var_t *var;
+  env_t *env;
+
+  if (!current_env) {
+    current_env = create_env(NULL);
+  }
 
   // linear search for named variable
-  for (var = var_head; var; var = var->next)
+  for (env = current_env; env; env = env->parent)
     {
-      if (strcasecmp (name, var->name) == 0)
-	return var;
-    }
+    for (var = env->first; var; var = var->next)
+      {
+        if (strcasecmp (name, var->name) == 0)
+        {
+//		  printf("%s found at level %d\n", name, env->level);
+		  return var;
+		}
+      }
+  }
 
   // if not found, create
   var = alloc (sizeof (var_t));
@@ -117,8 +156,32 @@ var_t *find_var (char *name)
     {
       var->init = false;
     }
-  var->next = var_head;
-  var_head = var;
+  var->next = current_env->first;
+  current_env->first = var;
+  return var;
+}
+
+var_t *new_int_var (int num)
+{
+  var_t *var = alloc (sizeof (var_t));
+  char *c = alloc (sizeof (char) * 16);
+  sprintf(c, "%d", num);
+	var->name = c;
+	var->val = num;
+//	printf("%s => %d\n",var->name, var->val);
+	var->init = true;
+  return var;
+}
+
+var_t *new_arg_var (char* s)
+{
+  var_t *var = alloc (sizeof (var_t));
+  var->name = alloc (sizeof (char) * 32);
+  strcpy(var->name, s);
+//  printf("New var : %s\n", var->name);
+  var->val = 0;
+  var->init = false;
+  var->next = NULL;
   return var;
 }
 
@@ -149,7 +212,7 @@ void print_vars (bool show_uninitialized)
 {
   var_t *var;
 
-  for (var = var_head; var; var = var->next)
+  for (var = current_env->first; var; var = var->next)
     {
       if ((! var->init) && (! show_uninitialized))
 	continue;
@@ -177,9 +240,17 @@ void check_var_init (var_t *var)
  */
 int execute_stmt (stmt_t *stmt)
 {
+	
   int tmp;
+  env_t *next_env;
   stmt_t *proc;
+  var_t *var1;
+  var_t *var2;
+  var_t *modifvar;
   stmt_line = stmt->line;
+  if (stmt->type != RUNPROC_STMT && stmt->type != DEFPROC_STMT && stmt->var){
+	  stmt->var = find_var(stmt->var->name);
+  }
   switch (stmt->type)
     {
     case CLEAR_STMT:
@@ -219,18 +290,54 @@ int execute_stmt (stmt_t *stmt)
       break;
     case PRINT_STMT: // Adding print for easier reading
       check_var_init (stmt->var);
-      printf("%s : %d\n", stmt->var->name, (int)stmt->var->val);
+      printf("%s : %d ", stmt->var->name, (int)stmt->var->val);
+      if (verbose){
+		printf("at level %d\n", current_env->level);
+	  } else {
+		  printf("\n");
+	  }
       break;
     case DEFPROC_STMT:
       stmt->proc = proc_head;
       proc_head = stmt;
       printf("New Subroutine : %s\n", proc_head->name);
+      var1 = stmt->var;
+      if (verbose)
+		while (var1){
+			printf("\tArgument needed : %s\n", var1->name);
+			var1 = var1->next;
+		}
       break;
     case RUNPROC_STMT:
       proc = find_proc(stmt->name);
       printf("Running subroutine : %s\n", stmt->name);
       if (proc) { // There is a macro with this name
+		var1 = proc->var;
+		var2 = stmt->var;
+		next_env = create_env(current_env);
+		while (var1 != NULL){
+			if (verbose)
+				printf("\targ %s",var1->name);
+			if (var2 != NULL) {
+			modifvar = copy_find_var(var1->name);
+			if (var2->val == 0){ // variable argument
+				modifvar->val = find_var(var2->name)->val;
+			} else { // integer argument
+				modifvar->val = var2->val;
+			}
+			if (verbose)
+				printf(" => %d \n", (int) modifvar->val);
+			modifvar->next = next_env->first;
+			next_env->first = modifvar;
+			var1 = var1->next;
+			var2 = var2->next;
+		} else {
+		  fatal(2, "not enough arguments");
+		}
+	}
+	current_env = next_env;
 	execute_stmt_list (proc->stmt_list);
+  	current_env = current_env->parent;
       } else {
 	fatal(2, "macro doesn't exist");
       }
@@ -277,6 +384,10 @@ void add_stmt_to_list (stmt_t *head, stmt_t *stmt)
   head->tail = stmt;
 }
 
+void add_val_to_list (var_t *head, var_t *var)
+{
+  head->next = var;
+}
 
 extern FILE *yyin;
 extern int yydebug;
@@ -369,6 +480,8 @@ int main (int argc, char *argv [])
 	    init_to_zero = false;
 	  else if (strcmp (argv [0], "-O") == 0)
 	    opt_flag = true;
+	  else if (strcmp (argv [0], "-v") == 0)
+	    verbose = true;
 	  else
 	    fatal (1, "unrecognized option '%s'", argv [0]);
 	}

@@ -23,6 +23,8 @@
 
 typedef struct var_t var_t;
 
+typedef struct env_t env_t;
+
 typedef enum 
 {
   CLEAR_STMT,
@@ -59,6 +61,10 @@ void set_var (var_t *var, uintmax_t value);
 stmt_t *new_stmt (stmt_type_t type, var_t *var);
 
 void add_stmt_to_list (stmt_t *head, stmt_t *stmt);
+void add_val_to_list (var_t *head, var_t *var);
+var_t *new_int_var (int num);
+var_t *new_arg_var (char* s);
+var_t *copy_find_var (char *name);
 
 int execute_stmt (stmt_t *stmt);
 int execute_stmt_list (stmt_t *list);

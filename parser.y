@@ -39,7 +39,8 @@
 %token <string> IDENT
 %token <integer> INTEGER
 
-%type <var> var
+%type <var> var val 
+%type <var> val_list arg_list
 %type <stmt> stmt clear_stmt incr_stmt decr_stmt while_stmt copy_stmt print_stmt defproc_stmt runproc_stmt exit_stmt
 %type <stmt> stmt_list
 %%
@@ -62,6 +63,7 @@ stmt_list:	stmt { $$ = $1; }
 			  $$ = $1;
 			};
 
+
 stmt:		clear_stmt 
 		| incr_stmt 
 		| decr_stmt 
@@ -75,6 +77,35 @@ stmt:		clear_stmt
 var:		IDENT
 		{
 		  $$ = find_var ($1);
+		};
+
+val:		INTEGER
+		{
+		  $$ = new_int_var($1); 
+		}
+		| IDENT 
+		{
+		  $$ = copy_find_var ($1); 
+		};
+
+val_list:	val
+		{ 
+		  $$ = $1;
+		}
+		| val_list ',' val
+			{
+			  add_val_to_list ($3, $1);
+			  $$ = $3;
+			};
+			
+arg_list:	IDENT
+		{
+		  $$ = new_arg_var($1);
+		}
+		| arg_list ',' IDENT
+		{
+		  $$ = new_arg_var($3);
+		  add_val_to_list($$, $1);
 		};
 
 clear_stmt:	CLEAR var ';'
@@ -116,11 +147,22 @@ defproc_stmt:	DEFPROC IDENT ';' stmt_list ENDPROC ';'
 		  $$ = new_stmt (DEFPROC_STMT, NULL);
 		  $$->name = $2;
 		  $$->stmt_list = $4;
+		}
+		| DEFPROC IDENT '(' arg_list ')' ';' stmt_list ENDPROC ';'
+		{
+		  $$ = new_stmt (DEFPROC_STMT, $4);
+		  $$->name = $2;
+		  $$->stmt_list = $7;
 		};
 
 runproc_stmt:	RUN IDENT ';'
 		{
 		  $$ = new_stmt (RUNPROC_STMT, NULL);
+		  $$->name = $2;
+		}
+		| RUN IDENT '(' val_list ')' ';'
+		{
+		  $$ = new_stmt (RUNPROC_STMT, $4);
 		  $$->name = $2;
 		};
 

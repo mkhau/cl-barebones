@@ -22,6 +22,8 @@
 # note that this is not optimized, and the initial values of arg0 and arg1 will be forgotten.
 # "ajoute5" will just add 5 to arg0 and put it into res.
 
+clear res;
+
 defproc ajouter;
   while arg1 not 0 do;
     incr arg0;
@@ -32,25 +34,28 @@ defproc ajouter;
   print arg0;
 endproc;
 
-defproc ajoute5;
+defproc ajoute1 (c) ;
+  copy c to arg0;
   clear arg1;
   incr arg1;
-  incr arg1;
-  incr arg1;
-  incr arg1;
-  incr arg1;
   run ajouter;
-  print arg1;
+  print c;
   exit;
-  print arg0;
+  print c;
 endproc;
 
-
+incr N;
 incr N;
 incr N;
 print N;
+incr M;
+incr M;
+print M;
 copy N to arg0;
-run ajoute5;
+copy M to arg1;
+run ajouter;
+print res;
+run ajoute1 ( Noob , Nul );
 print res;
 
 defproc gauche;

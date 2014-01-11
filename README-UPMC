@@ -12,25 +12,26 @@ Ajout : structure de contrôle procedure :
 
 defproc PROC;
 stmt_list L;
-(exit ;)
+(exit ; si besoin)
 endproc;
 
 run PROC;
 
-Il n'y a pas d'arguments pour les procedures.
+defproc PROC2 ( arg1 , arg2 );
+(pareil)
+endproc;
 
-Par convention et pour plus de lisibilité, je conseille d'utiliser comme noms d'arguments arg0, arg1, etc... et d'utiliser res comme nom de variable de résultat. De ce fait, il est conseillé d'initialiser correctement les variables requises (et de copier les variables importantes dans un nom qui ne sera pas réutilisé ailleurs) avant chaque appel, et éventuellement de les remettre à leur place ensuite. De même, il est conseillé de copier la (ou les) variable de retour ailleurs pour ne pas l'oublier s'il y a besoin d'un autre appel ensuite.
+run PROC2 ( 42 , A );
 
-Il est possible d'appeler une procedure à l'intérieur d'une autre. Attention à l'effet de bord, car les variables-registres étant toutes globales, des appels de fonction encastrés peuvent modifier des données.
+Ajout d'arguments selon la syntaxe au dessus (et sans parenthèses
+si pas d'arguments).
 
-Appeler une procedure inexistante crée une erreur; Une macro est considérée comme inexistante tant qu'elle n'a pas été définie. De ce fait, une procedure ne peut être appelée si elle n'est pas définie plus haut dans le programme.
+Le fichier testfct.bb illustre bien la mise en place des procédures.
 
-Redéfinir une procedure est possible. L'ancienne procedure n'est pas effacée, mais ne sera juste jamais appelée.
-
-Pour sortir d'une procedure, deux cas :
-mentionner un "exit;" auquel cas l'exécution de la procedure prendra fin;
-Ou arriver à endproc;
+Pour l'instant, il n'y a pas encore de valeur de retour implantée.
+Utiliser res comme valeur de retour par convention.
 
 A faire :
-
-Introduire le principe de "variable locale".
+-> Ajouter une valeur de retour
+-> Ajouter des types autres que INT
+-> utiliser des tables de hachage à la place des listes chainées pour les environnements

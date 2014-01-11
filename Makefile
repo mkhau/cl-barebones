@@ -44,4 +44,4 @@ scanner.o: scanner.l barebones.h util.h parser.tab.h
 parser.tab.o: parser.y barebones.h
 
 clean:
-	rm -f *.o *.tab.* barebones *~
+	rm -f *.o *.tab.* barebones *~ parser.output

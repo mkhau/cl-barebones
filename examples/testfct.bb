@@ -17,60 +17,70 @@
 # <http://www.gnu.org/licenses/>.
 ######################################
 
-# Just a little program to test the defmac and run statements.
-# "ajouter" is french for "add", and will put arg0 + arg1 into res.
+# Just a little program to test the defproc and run statements.
+# "add" will put a + b into res.
 # note that this is not optimized, and the initial values of arg0 and arg1 will be forgotten.
-# "ajoute5" will just add 5 to arg0 and put it into res.
+# "add5" will just add 5 to a and put it into res.
 
-defproc ajouter;
-  while arg1 not 0 do;
-    incr arg0;
-    decr arg1;
+defproc add ( a, b );
+  print a;
+  print b;
+  while a not 0 do;
+    incr b;
+    decr a;
   end;
-  copy arg0 to res;
-  exit;
-  print arg0;
+  copy b to res;
 endproc;
 
-defproc ajoute5;
-  clear arg1;
-  incr arg1;
-  incr arg1;
-  incr arg1;
-  incr arg1;
-  incr arg1;
-  run ajouter;
-  print arg1;
-  exit;
-  print arg0;
-endproc;
+incr c;
+incr c;
 
-
-incr N;
-incr N;
-print N;
-copy N to arg0;
-run ajoute5;
+run add ( 12 , c );
 print res;
 
-defproc gauche;
-  while arg0 not 0 do;
-    decr arg0;
-    run droite;
-  end;
-  while res not 0 do;
-    print res;
+defproc add5 (e);
+  print e;
+  run add ( 5 , e );
+endproc;
+
+run add5 ( 70 );
+print res;
+
+run add5 (32);
+print res;
+
+incr c;
+print c;
+
+run add ( 12 , c );
+print res;
+
+defproc add10 (d);
+  print d;
+  run add5(d);
+  run add5(res);
+endproc;
+
+run add10(777);
+print res;
+
+
+defproc gauche (g);
+  print g;
+  while g not 0 do;
+    decr g;
+    run droite(g);
     exit;
-    print arg0;
   end;
 endproc;
 
-defproc droite;
-  while arg0 not 0 do;
-    decr arg0;
-    run gauche;
+defproc droite (d);
+  print d;
+  while d not 0 do;
+    decr d;
+    run gauche(d);
+    exit;
   end;
 endproc;
 
-run gauche;
-
+run gauche(5);
