@@ -89,25 +89,25 @@ Statements:
     copy <var> to <var>;    # Copy one variable to another, preserving
                             # value of original.
                           
-    print <var>;			# Print the current value of the variable.
-							# Also print its statements if it is a function.
+    print <var>;            # Print the current value of the variable.
+                            # Also print its statements if it is a function.
 							
-	defproc <ident> (<var>,	# Create a subroutine named <ident> that has
-	<var>...);				# the differents <var> arguments. If there is
-	  <statements>			# no arguments needed, forget the parenthesis.
-	endproc;				# Does not have (yet) a returned value.
+    defproc <ident> (<var>, # Create a subroutine named <ident> that has
+    <var>...);              # the differents <var> arguments. If there is
+    <statements>          # no arguments needed, forget the parenthesis.
+    endproc;                # Does not have (yet) a returned value.
 	
-	lambda <var> (<var>,	# Same as above, except that the first variable
-	...);					# is the function itself, and can be run as a
-	  <statements>			# subroutine like above.
-	endlam;
+    lambda <var> (<var>,    # Same as above, except that the first variable
+    ...);                   # is the function itself, and can be run as a
+      <statements>          # subroutine like above.
+    endlam;
 	
-	run <ident>	(<var>,		# Run a subroutine (may it be a variable or not)
-	<integer>...)			# with arguments inside parenthesis. Arguments
-							# may be variables or integers. Same as above,
-							# forget the parenthesis if not needed.
+    run <ident>	(<var>,     # Run a subroutine (may it be a variable or not)
+    <integer>...)           # with arguments inside parenthesis. Arguments
+                            # may be variables or integers. Same as above,
+                            # forget the parenthesis if not needed.
 							
-	exit;					# Ends the current running subroutine.
+    exit;                   # Ends the current running subroutine.
 
 -----------------------------------------------------------------------------
 Language extensions:
